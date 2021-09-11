@@ -51,36 +51,22 @@ def validar_numero(event, context):
         }
         
 def login(event, context):
-    
-    usuario = "qwewq"
-    contrasena = "123qwe"
+    body = json.loads(event['body'])
+    usuario = body['usuario']
+    contrasena = body['password']
     try:
         classUsuarios = Usuarios.login(usuario, contrasena)
-
-        # matched = re.match('[0-9]', variables)
-        # is_match = bool(matched)
-        
-        body = {
-            "status": 1,
-            "data": classUsuarios
-        }
-
-        # if is_match:
-        #     body = {
-        #         "status": 1,
-        #         "message": "Validacion Correcta de variale " + variables
-        #     }
-        # else:
-        #     body = {
-        #         "status": 0,
-        #         "message": "Validacion Incorrecta variale " + variables
-        #     }
-        
-        return {
-            "statusCode": 200,
-            "body": json.dumps(body)
-        }
-        
+        print(classUsuarios)
+        if classUsuarios['state']:
+            return {
+                "statusCode": 200,
+                "body": json.dumps(classUsuarios)
+            }
+        else:
+            return {
+                "statusCode": 400,
+                "body": json.dumps(classUsuarios)
+            }
     except AssertionError as error:
         body = {
             "status": 0,

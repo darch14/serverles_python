@@ -1,6 +1,7 @@
 import json
 import re
 from Class.Usuarios import Usuarios
+from Class.Validaciones import Validacion
 
 def hello(event, context):
     # variables = event['body'] 
@@ -56,7 +57,6 @@ def login(event, context):
     contrasena = body['password']
     try:
         classUsuarios = Usuarios.login(usuario, contrasena)
-        print(classUsuarios)
         if classUsuarios['state']:
             return {
                 "statusCode": 200,
@@ -67,6 +67,32 @@ def login(event, context):
                 "statusCode": 400,
                 "body": json.dumps(classUsuarios)
             }
+    except AssertionError as error:
+        body = {
+            "status": 0,
+            "message": "Ops A Ocurrido Un Error" + error
+        }
+        return {
+            "statusCode": 500,
+            "body": json.dumps(body)
+        }
+
+def prueba(event, context):
+    body = json.loads(event['body'])
+    campo = body['usuario']
+    tipo = body['tipo']
+    try:
+        datos = {
+            "operador": tipo,
+            "campo": "campo",
+            "valor": campo
+        }
+        classValidacion = Validacion.validUno(datos)
+        return {
+            "statusCode": 200,
+            "body": json.dumps(classValidacion)
+        }
+            
     except AssertionError as error:
         body = {
             "status": 0,

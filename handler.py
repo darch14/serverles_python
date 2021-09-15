@@ -87,10 +87,11 @@ def prueba(event, context):
             "campo": "campo",
             "valor": campo
         }
-        classValidacion = Validacion.validUno(datos)
+        classValidacion = Validacion(datos)
+        valid = classValidacion.validUno()
         return {
             "statusCode": 200,
-            "body": json.dumps(classValidacion)
+            "body": json.dumps(valid)
         }
             
     except AssertionError as error:

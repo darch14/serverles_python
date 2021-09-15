@@ -2,18 +2,18 @@ import re
 
 class Validacion:
 
-    def __init__(self):
-        pass
+    def __init__(self, array_datos):
+        self.array_datos = array_datos
 
     def soloLetras(seft, campo, valor):
         if valor.isalpha():
             return {
-                "state": True,
+                "state": 200,
                 "message": f"El {campo} es de solo letras"
             }
         else:
             return {
-                "state": False,
+                "state": 500,
                 "message": f"El {campo} debe ser solo letras"
             }
 
@@ -23,24 +23,24 @@ class Validacion:
         is_match = bool(matched)
         if is_match:
             return {
-                "state": True,
+                "state": 200,
                 "message": f"El {campo} tiene solo letras y espacios"
             }
         else:
             return {
-                "state": False,
+                "state": 500,
                 "message": f"El {campo} debe ser solo letras y espacios"
             }
     
     def numeroEntero(self, campo, valor):
         if valor.isdigit():
             return {
-                "state": True,
+                "state": 200,
                 "message": f"El {campo} es un entero"
             }
         else:
             return {
-                "state": False,
+                "state": 500,
                 "message": f"El {campo} debe ser un entero"
             }
 
@@ -48,12 +48,12 @@ class Validacion:
         val = valor.replace(" ", "")
         if val.isalpha():
             return {
-                "state": True,
+                "state": 200,
                 "message": f"El {campo} es una cadena"
             }
         else:
             return {
-                "state": False,
+                "state": 500,
                 "message": f"El {campo} debe ser una cadena"
             }
 
@@ -63,12 +63,12 @@ class Validacion:
         is_match = bool(matched)
         if is_match:
             return {
-                "state": True,
+                "state": 200,
                 "message": f"El {campo} es un correo"
             }
         else:
             return {
-                "state": False,
+                "state": 500,
                 "message": f"El {campo} debe ser un correo"
             }
     
@@ -78,16 +78,17 @@ class Validacion:
         is_match = bool(matched)
         if is_match:
             return {
-                "state": True,
+                "state": 200,
                 "message": f"El {campo} es un decimal"
             }
         else:
             return {
-                "state": False,
+                "state": 500,
                 "message": f"El {campo} debe ser un decimal"
             }    
 
-    def validUno(self, array_datos):
+    def validUno(self):
+        array_datos = self.array_datos
         operador = array_datos['operador']
         campo = array_datos['campo']
         valor = array_datos['valor']

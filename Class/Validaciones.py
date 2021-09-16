@@ -85,7 +85,28 @@ class Validacion:
             return {
                 "state": 500,
                 "message": f"El {campo} debe ser un decimal"
-            }    
+            }
+
+    def contra(self, campo, valor):
+        valid = True
+        if len(valor) >= 8 and len(valor) <= 16:
+            valid = False
+        elif re.search('[0-9]',valor) is None:
+            valid = False
+        elif re.search('[A-Z]',valor) is None: 
+            valid = False
+        elif re.search('[a-z]',valor) is None: 
+            valid = False
+        if valid:
+            return {
+                "state": 200,
+                "message": f"El {campo} es una contraseña valida"
+            }
+        else:
+            return {
+                "state": 500,
+                "message": f"El {campo} tener entre 8 a 16 caracteres, contener mayuzcula, minuscula y numero"
+            }
 
     def validUno(self):
         array_datos = self.array_datos
@@ -98,7 +119,8 @@ class Validacion:
             3: self.numeroEntero(campo, valor),
             4: self.cadena(campo, valor),
             5: self.correo(campo, valor),
-            5: self.decimales(campo, valor)
+            5: self.decimales(campo, valor),
+            6: self.contra(campo, valor)
         }
 
         error = {
